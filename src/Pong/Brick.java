@@ -5,11 +5,12 @@ import java.awt.*;
 
 public class Brick extends GameItem {
 	
-
+	int strength = 1;
 	
-	public Brick(int x, int y, int width, int height)
+	public Brick(int x, int y, int width, int height, int strength)
 	{
 		super(x, y, width, height);
+		this.strength = strength;
 	}
 	
 	public void render(Graphics g)
@@ -19,8 +20,15 @@ public class Brick extends GameItem {
 		g2d.fillRect(this.x, this.y, this.width, this.height);
 	}
 	
-	public Rectangle getBounds()
+	public void reduceStrength(int amount)
 	{
-		return new Rectangle(this.x, this.y, this.width, this.height);
+		this.strength = this.strength - amount;
+		if(this.strength<0) this.strength = 0;
 	}
+	
+	public int getStrength()
+	{
+		return this.strength;
+	}
+	
 }

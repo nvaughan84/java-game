@@ -9,8 +9,7 @@ public class Paddle extends GameItem{
 	Game game;
 	
 	public Paddle(int x, int y, int width, int height, int directionX, int directionY, Game game)
-	{
-		
+	{		
 		super(x, y, width, height);
 		this.directionX = directionX;
 		this.directionY = directionY;
@@ -27,8 +26,6 @@ public class Paddle extends GameItem{
 	
 	public void move(int x, int y)
 	{
-//		this.directionX = this.directionX*directionX;
-//		this.directionY = this.directionY*directionY;
 		this.x = this.x+x*this.directionX;
 		this.y = this.y+y*this.directionY;
 	}
