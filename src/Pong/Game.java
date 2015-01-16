@@ -15,6 +15,8 @@ public class Game extends JPanel implements KeyListener{
 	Paddle paddle;
 	Brick brick;
 	ArrayList<Brick> bricks;
+	boolean paddleLeft;
+	boolean paddleRight;
 	
 	public Game()
 	{
@@ -22,8 +24,10 @@ public class Game extends JPanel implements KeyListener{
 		this.setFocusable(true);
 		createBricks();
 		
+		this.setDoubleBuffered(true);
+		
 		//Initialize components
-		this.ball = new Ball(1,1,20,20, 1, 1, this);
+		this.ball = new Ball(1,150,20,20, 1, 1, this);
 		this.paddle = new Paddle(0,200,50,5, 1, 0, this);
 		
 		
@@ -35,35 +39,51 @@ public class Game extends JPanel implements KeyListener{
 	public void createBricks()
 	{
 		bricks = new ArrayList<Brick>();
-		for(int i = 0; i<20; i++)
+		int border = 20;
+		
+		//top level
+		for(int i = 0; i<14; i++)
 		{
-			bricks.add(new Brick(20*i, 20, 20, 5));
+			bricks.add(new Brick(border+(i*40), 20, 40, 10));
+		}
+		
+		//second level
+		for(int i = 0; i<14; i++)
+		{
+			bricks.add(new Brick(border+(i*40), 60, 40, 10));
 		}
 	}
 	
 	public void keyPressed(KeyEvent e)
 	{
-		int keyCode = e.getKeyCode();
-		System.out.println(keyCode);
+		int keyCode = e.getKeyCode();		
 		if(keyCode==KeyEvent.VK_RIGHT) //right
 		{
-			paddle.move(20,0);
+			paddleRight = true;
 		}
 		if(keyCode==KeyEvent.VK_LEFT)//left
 		{
-			paddle.move(-20,0);
+			paddleLeft = true;
 		}
 		
 	}
 	
 	public void keyReleased(KeyEvent e)
 	{
-		System.out.println(e);
+		int keyCode = e.getKeyCode();		
+		if(keyCode==KeyEvent.VK_RIGHT) //right
+		{
+			paddleRight = false;
+		}
+		if(keyCode==KeyEvent.VK_LEFT)//left
+		{
+			paddleLeft = false;
+		}
 	}
 	
 	public void keyTyped(KeyEvent e)
 	{
-		System.out.println(e);
+		//System.out.println(e);
 	}
 	   
 	public void createUI()
@@ -82,6 +102,14 @@ public class Game extends JPanel implements KeyListener{
 		{
 			ball.move(2,2);
 			
+			if(paddleRight)
+			{
+				paddle.setX(paddle.getX()+5);
+			}
+			if(paddleLeft)
+			{
+				paddle.setX(paddle.getX()-5);
+			}
 					
 			if(ball.intersected(paddle))
 			{
@@ -98,6 +126,8 @@ public class Game extends JPanel implements KeyListener{
 			      Brick s = iter.next();
 			      if (ball.intersected(s)) {
 			        iter.remove();
+			        ball.setDirectionY(-1*ball.getDirectionY());
+			        break;
 			      }			      
 			    }
 			

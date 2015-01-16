@@ -63,5 +63,15 @@ public class GameItem {
 	{
 		return this.y;
 	}
+	
+	public void setX(int x)
+	{
+		this.x = x;
+	}
+	
+	public void getY(int y)
+	{
+		this.y = y;
+	}
 
 }
