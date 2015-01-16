@@ -1,9 +1,12 @@
 package Pong;
 import java.awt.*;
+
 import javax.swing.*;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game extends JPanel implements KeyListener{
 	
@@ -84,13 +87,20 @@ public class Game extends JPanel implements KeyListener{
 			{
 				ball.setDirectionY(-1);
 			}
-			for(Brick b : bricks)
-			{
-				if(ball.intersected(b))
-				{
-					System.out.println(b.getX());
-				}
-			}
+//			for(Brick b : bricks)
+//			{
+//				if(ball.intersected(b))
+//				{
+//					//b.remove();
+//				}
+//			}
+			for (Iterator<Brick> iter = bricks.iterator(); iter.hasNext();) {
+			      Brick s = iter.next();
+			      if (ball.intersected(s)) {
+			        iter.remove();
+			      }			      
+			    }
+			
 			this.setBackground(Color.BLACK);
 			this.repaint();
 			try{
